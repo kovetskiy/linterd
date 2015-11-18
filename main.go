@@ -181,7 +181,6 @@ func goget(gopathDirectory, repositoryDirectory string) error {
 		environ, "GOPATH="+gopathDirectory, "GO15VENDOREXPERIMENT=1",
 	)
 
-	fmt.Printf("XXXXXX main.go:165: cmd.Env: %#v\n", cmd.Env)
 	_, err := execute(cmd)
 	return err
 }
