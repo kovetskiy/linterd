@@ -6,7 +6,7 @@ pkgdesc="lint your golang project with gometalinter"
 arch=('i686' 'x86_64')
 license=('GPL')
 makedepends=('go' 'git')
-depends=('gometalinter-git')
+depends=('go' 'git' 'gometalinter-git')
 
 source=(
 	"linterd::git+https://github.com/kovetskiy/linterd"
