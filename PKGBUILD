@@ -1,11 +1,12 @@
 # Maintainer: Egor Kovetskiy <e.kovetskiy@office.ngs.ru>
 pkgname=linterd
-pkgver=20151118.1_a4a4963
+pkgver=20151118.3_e9f30aa
 pkgrel=1
 pkgdesc="lint your golang project with gometalinter"
 arch=('i686' 'x86_64')
 license=('GPL')
 makedepends=('go' 'git')
+depends=('gometalinter-git')
 
 source=(
 	"linterd::git+https://github.com/kovetskiy/linterd"
