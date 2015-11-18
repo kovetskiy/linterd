@@ -49,7 +49,7 @@ func main() {
 		config.StashHost, config.StashUser, config.StashPassword,
 	)
 	if err != nil {
-		log.Fatal("can't create stash api resource: %s", err)
+		log.Fatalf("can't create stash api resource: %s", err)
 	}
 
 	server := &Server{
@@ -116,7 +116,10 @@ func (server *Server) ServeHTTP(
 
 	output := lint(gopathDirectory, repositoryDirectory, server.lintArgs)
 
-	response.Write([]byte(output))
+	_, err = response.Write([]byte(output))
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func (server *Server) getCloneURLAndBranch(
