@@ -1,0 +1,9 @@
+[Unit]
+Description=lint your golang project with gometalinter
+
+[Service]
+ExecStart=/usr/bin/linterd
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
