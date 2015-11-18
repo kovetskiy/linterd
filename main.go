@@ -21,10 +21,11 @@ const (
 	usage = `
 
 Usage:
-	linterd [options]
+    linterd [options]
 
 Options:
-	-c <config>       Use specified configuration file [default: /etc/linterd]
+    -c <config>       Use specified configuration file
+                      [default: /etc/linterd.conf].
 `
 )
 
