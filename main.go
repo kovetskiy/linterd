@@ -114,7 +114,7 @@ func (server *Server) ServeHTTP(
 		repositoryDirectory, server.lintArgs,
 	)
 
-	output := lint(repositoryDirectory, server.lintArgs)
+	output := lint(gopathDirectory, repositoryDirectory, server.lintArgs)
 
 	response.Write([]byte(output))
 }
@@ -169,25 +169,25 @@ func checkoutRepository(repositoryDirectory string, branch string) error {
 func goget(gopathDirectory, repositoryDirectory string) error {
 	cmd := exec.Command("go", "get", "-v")
 	cmd.Dir = repositoryDirectory
-
-	environ := os.Environ()
-	for index, env := range environ {
-		if strings.HasPrefix(env, "GOPATH=") {
-			environ[index] = ""
-		}
-	}
-
-	cmd.Env = append(
-		environ, "GOPATH="+gopathDirectory, "GO15VENDOREXPERIMENT=1",
-	)
+	cmd.Env = getGoEnvironment(gopathDirectory)
 
 	_, err := execute(cmd)
 	return err
 }
 
-func lint(repositoryDirectory string, args []string) string {
+func lint(gopathDirectory, repositoryDirectory string, args []string) string {
 	cmd := exec.Command("gometalinter", args...)
 	cmd.Dir = repositoryDirectory
+	cmd.Env = getGoEnvironment(gopathDirectory)
+
 	output, _ := execute(cmd)
 	return output
+}
+
+func getGoEnvironment(gopathDirectory string) []string {
+	return append(
+		[]string{"GOPATH=" + gopathDirectory, "GO15VENDOREXPERIMENT=1"},
+		os.Environ()...,
+	)
+
 }
