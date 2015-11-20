@@ -58,6 +58,7 @@ func main() {
 	}
 
 	log.Printf("Listening on %s", config.ListenAddress)
+
 	err = http.ListenAndServe(config.ListenAddress, server)
 	if err != nil {
 		log.Fatal(err)
@@ -87,7 +88,7 @@ func (server *Server) ServeHTTP(
 
 	log.Printf("checkout repository '%s' to '%s'", repositoryDirectory, branch)
 
-	err = checkoutRepository(repositoryDirectory, branch)
+	err = checkoutBranch(repositoryDirectory, branch)
 	if err != nil {
 		log.Printf(
 			"can't checkout %s (%s) to '%s': %s",
@@ -120,6 +121,14 @@ func (server *Server) ServeHTTP(
 	if err != nil {
 		log.Println(err)
 	}
+
+	// remove temporary directory
+	log.Printf("removing temporary directory %s", gopathDirectory)
+
+	err = os.RemoveAll(gopathDirectory)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func (server *Server) getCloneURLAndBranch(
@@ -138,7 +147,7 @@ func (server *Server) getCloneURLAndBranch(
 		)
 	}
 
-	return url, "refs/heads/master", nil
+	return url, "origin/master", nil
 }
 
 func cloneRepository(url string) (string, string, error) {
@@ -162,7 +171,7 @@ func cloneRepository(url string) (string, string, error) {
 	return gopathDirectory, repositoryDirectory, nil
 }
 
-func checkoutRepository(repositoryDirectory string, branch string) error {
+func checkoutBranch(repositoryDirectory string, branch string) error {
 	cmd := exec.Command("git", "checkout", branch)
 	cmd.Dir = repositoryDirectory
 	_, err := execute(cmd)
