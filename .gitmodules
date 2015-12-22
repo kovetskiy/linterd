@@ -1,9 +1,6 @@
-[submodule "vendor/github.com/bndr/gopencils"]
-	path = vendor/github.com/bndr/gopencils
-	url = git://github.com/bndr/gopencils
-[submodule "vendor/github.com/docopt/docopt-go"]
-	path = vendor/github.com/docopt/docopt-go
-	url = git://github.com/docopt/docopt-go
 [submodule "vendor/github.com/BurntSushi/toml"]
 	path = vendor/github.com/BurntSushi/toml
 	url = git://github.com/BurntSushi/toml
+[submodule "vendor/github.com/bndr/gopencils"]
+	path = vendor/github.com/bndr/gopencils
+	url = git://github.com/bndr/gopencils
